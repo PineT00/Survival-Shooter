@@ -77,7 +77,7 @@ PrefabInstance:
       addedObject: {fileID: 567260300547398233}
     - targetCorrespondingSourceObject: {fileID: 100074, guid: c236aa7ad6dcabe47abc7d2cf903ae71, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 4787211471938549226}
+      addedObject: {fileID: 1392363730729101435}
     - targetCorrespondingSourceObject: {fileID: 100074, guid: c236aa7ad6dcabe47abc7d2cf903ae71, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3220515001491118921}
@@ -249,7 +249,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.5, y: 0.5, z: 0.5}
   m_Center: {x: 0, y: 0.62, z: 0.27}
---- !u!114 &4787211471938549226
+--- !u!114 &1392363730729101435
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -258,18 +258,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 1129330058376273844}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d1c80fb83c54bb479ec0eac6f9eae83, type: 3}
+  m_Script: {fileID: 11500000, guid: 881f8007aa65e8c449de0da94f8f206c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   startingHealth: 100
   whatIsTarget:
     serializedVersion: 2
     m_Bits: 64
+  targetEntity: {fileID: 0}
   hitEffect: {fileID: 3779719892423481021}
   deathSound: {fileID: 8300000, guid: 62366b8d2c37a49dca550841c741317f, type: 3}
   hitSound: {fileID: 8300000, guid: 1d4840678e677424b8921716c72397ea, type: 3}
-  maxHealth: 100
-  speed: 3
+  maxHealth: 120
+  speed: 4
   damage: 25
   timeBetAttack: 0.5
 --- !u!54 &3220515001491118921

@@ -175,7 +175,7 @@ public class EnemySpawner : MonoBehaviour
 
     IEnumerator CoDestroyAfter(Enemy go, float time)
     {
-        if(go != null)
+        if(go.gameObject.activeSelf)
         {
             yield return new WaitForSeconds(time);
             go.gameObject.SetActive(false);
