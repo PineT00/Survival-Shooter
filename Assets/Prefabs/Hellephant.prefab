@@ -328,7 +328,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d1c80fb83c54bb479ec0eac6f9eae83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingHealth: 100
+  startingHealth: 200
   whatIsTarget:
     serializedVersion: 2
     m_Bits: 64
@@ -336,8 +336,8 @@ MonoBehaviour:
   deathSound: {fileID: 8300000, guid: fce027b40770a44298a6f5a4233bfb04, type: 3}
   hitSound: {fileID: 8300000, guid: fce027b40770a44298a6f5a4233bfb04, type: 3}
   maxHealth: 200
-  speed: 5
-  damage: 20
+  speed: 4
+  damage: 40
   timeBetAttack: 0.5
 --- !u!54 &4363571391277995123
 Rigidbody:

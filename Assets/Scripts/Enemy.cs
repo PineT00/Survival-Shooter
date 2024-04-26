@@ -132,6 +132,7 @@ public class Enemy : LivingEntity
         SetActiveCollider();
         Setup();
         dead = false;
+        StartCoroutine(UpdatePath());
     }
 
     public void StartSinking()
