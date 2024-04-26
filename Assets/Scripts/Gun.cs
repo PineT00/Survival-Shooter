@@ -72,7 +72,7 @@ public class Gun : MonoBehaviour
             hitPoint = fireTransform.position + fireTransform.forward * fireDistance;
         }
 
-        StartCoroutine(ShotEffect(fireTransform.position + fireTransform.forward * 10f));
+        StartCoroutine(ShotEffect(fireTransform.position + fireTransform.forward * 20f));
     }
 
     private IEnumerator ShotEffect(Vector3 hitPosition)

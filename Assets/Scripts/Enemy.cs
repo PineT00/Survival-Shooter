@@ -19,7 +19,7 @@ public class Enemy : LivingEntity
     private Renderer enemyRenderer; // 렌더러 컴포넌트
 
     public float maxHealth = 100f;
-    public float speed = 10f;
+    public float speed = 5f;
     public float damage = 20f; // 공격력
     public float timeBetAttack = 0.5f; // 공격 간격
     private float lastAttackTime; // 마지막 공격 시점
@@ -89,7 +89,7 @@ public class Enemy : LivingEntity
             else
             {
                 pathFinder.ResetPath();
-                Collider[] cols = Physics.OverlapSphere(transform.position, 10f, whatIsTarget);
+                Collider[] cols = Physics.OverlapSphere(transform.position, 100f, whatIsTarget);
                 foreach (Collider col in cols)
                 {
                     LivingEntity livingEntity = col.GetComponent<LivingEntity>();
@@ -104,10 +104,39 @@ public class Enemy : LivingEntity
 
         }
     }
+    public override void OnDamage(float damage, Vector3 hitPoint, Vector3 hitNormal)
+    {
+        hitEffect.transform.position = hitPoint;
+        hitEffect.transform.rotation = Quaternion.LookRotation(hitNormal);
+        hitEffect.Play();
+
+        enemyAudioPlayer.PlayOneShot(hitSound);
+
+        // LivingEntity의 OnDamage()를 실행하여 데미지 적용
+        base.OnDamage(damage, hitPoint, hitNormal);
+        Debug.Log("좀비아파");
+    }
+    public override void Die()
+    {
+        base.Die();
+        pathFinder.isStopped = true;
+        pathFinder.enabled = false;
+
+        enemyAnimator.SetTrigger("Die");
+        enemyAudioPlayer.PlayOneShot(deathSound);
+    }
+
+    public void StartSinking()
+    {
+        var cols = GetComponentsInChildren<Collider>();
+        foreach (Collider col in cols)
+        {
+            col.enabled = false;
+        }
+    }
 
     private void OnTriggerStay(Collider other)
     { 
-
         if (!dead && Time.time >= lastAttackTime + timeBetAttack)
         {
             var entity = other.GetComponent<LivingEntity>();

@@ -16,8 +16,6 @@ public class PlayerHealth : LivingEntity
     private PlayerMovement playerMovement; // 플레이어 움직임 컴포넌트
     private PlayerShooter playerShooter; // 플레이어 슈터 컴포넌트
 
-    //public event System.Action OnRespawn;
-
     private void Awake()
     {
         // 사용할 컴포넌트를 가져오기
@@ -32,22 +30,21 @@ public class PlayerHealth : LivingEntity
     {
         base.OnEnable();
 
-        ApplyUpdateHealth(200, false);
+        ApplyUpdateHealth(300, false);
+        playerMovement.enabled = true;
+        playerShooter.enabled = true;
 
         //healthSlider.gameObject.SetActive(true);
         //healthSlider.value = health / startingHealth;
 
-        playerMovement.enabled = true;
-        playerShooter.enabled = true;
-
-        //UIManager.instance.SetActiveGameoverUI(false);
+        UIManager.instance.SetActiveGameoverUI(false);
     }
 
     public override void RestoreHealth(float newHealth)
     {
         // LivingEntity의 RestoreHealth() 실행 (체력 증가)
         base.RestoreHealth(newHealth);
-        healthSlider.value = health / startingHealth;
+        //healthSlider.value = health / startingHealth;
     }
     public override void OnDamage(float damage, Vector3 hitPoint, Vector3 hitDirection)
     {
@@ -60,6 +57,8 @@ public class PlayerHealth : LivingEntity
         playerAudioPlayer.PlayOneShot(hitClip);
 
         Debug.Log("플레이어 아프다");
+
+        StartCoroutine(OnDamageUI(0.07f));
     }
     public override void Die()
     {
@@ -71,7 +70,18 @@ public class PlayerHealth : LivingEntity
         playerMovement.enabled = false;
         playerShooter.enabled = false;
 
+    }
 
-        //Invoke("Respawn", 5f); //일정시간후 해당함수 호출
+    public void RestartLevel()
+    {
+        GameManager.instance.ReStart();
+    }
+
+    IEnumerator OnDamageUI(float time)
+    {
+        UIManager.instance.SetActiveOnDamageUI(true);
+        yield return new WaitForSeconds(time);
+        UIManager.instance.SetActiveOnDamageUI(false);
+
     }
 }
