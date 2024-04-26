@@ -17,7 +17,7 @@ public class EnemySpawner : MonoBehaviour
 
     public List<Enemy> enemies = new List<Enemy>();
 
-    private int enemyCount;
+    public int enemyCount;
 
 
 
@@ -54,13 +54,13 @@ public class EnemySpawner : MonoBehaviour
 
         }
 
-        UpdateUI();
+        //UpdateUI();
     }
 
 
     private void UpdateUI()
     {
-        //Debug.Log(enemyCount);
+
     }
 
     private void SetPool(int stage)
@@ -70,6 +70,7 @@ public class EnemySpawner : MonoBehaviour
             Destroy(enemy.gameObject);
         }
         enemies.Clear();
+        enemyCount = 0;
 
         switch (stage)
         {
@@ -133,7 +134,6 @@ public class EnemySpawner : MonoBehaviour
                 int num = Random.Range(0, enemies.Count);
                 if (!enemies[num].gameObject.activeSelf)
                 {
-
                     enemies[num].gameObject.SetActive(true);
                     enemies[num].transform.position = spawnPoints[Random.Range(0, spawnPoints.Length)].position;
                     //enemies[num].transform.position = Vector3.zero;

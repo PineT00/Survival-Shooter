@@ -79,14 +79,15 @@ public class GameManager : MonoBehaviour
         {
             score += newScore;
 
-            UIManager.instance.UpdateScoreText(score);
-
-            if(score >= 30)
+            if(score >= 50)
             {
-                stageClear = true;
                 score = 0;
+                stageClear = true;
                 stage++;
             }
+
+            UIManager.instance.UpdateScoreText(score);
+
         }
     }
 
