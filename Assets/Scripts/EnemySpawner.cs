@@ -30,12 +30,22 @@ public class EnemySpawner : MonoBehaviour
     private int wave;
 
 
+    private void Start()
+    {
+        for (int i = 0; i < 10; i++)
+        {
+            go = Instantiate(enemyPrefabs[Random.Range(0, enemyPrefabs.Length)]);
+            go.Setup();
+            go.gameObject.SetActive(false); 
+            enemies.Add(go);
+        }
 
+
+    }
 
 
     private void Update()
     {
-
         // 게임 오버 상태일때는 생성하지 않음
         if (GameManager.instance != null && GameManager.instance.isGameover)
         {
@@ -44,7 +54,7 @@ public class EnemySpawner : MonoBehaviour
 
         if(spawnTime > spawnTimer)
         {
-            CreateEnemy();
+            SpawnEnemy();
             spawnTime = 0f;
         }
         else
@@ -52,22 +62,42 @@ public class EnemySpawner : MonoBehaviour
             spawnTime += Time.deltaTime;
         }
 
-
-
         UpdateUI();
     }
 
 
     private void UpdateUI()
     {
-        // 현재 웨이브와 남은 적의 수 표시
-        //UIManager.instance.UpdateWaveText(wave, enemyCount);
+        //Debug.Log(enemyCount);
     }
 
-    // 현재 웨이브에 맞춰 적을 생성
-    private void SpawnWave()
-    {
 
+    private void SpawnEnemy()
+    {
+        if(enemyCount < 10)
+        {
+            for (int i = 0; i < enemies.Count; ++i)
+            {
+                int num = Random.Range(0, enemies.Count);
+                if (!enemies[num].gameObject.activeSelf)
+                {
+                    enemies[num].gameObject.SetActive(true);
+                    go.Setup();
+                    go.SetActiveCollider();
+                    enemies[num].transform.position = spawnPoints[Random.Range(0, spawnPoints.Length)].position;
+                    enemyCount += 1;
+                    break;
+                }
+            }
+        }
+
+        go.onDeath += () =>
+        {
+            Debug.Log("onDeath 호출!");
+            enemyCount -= 1;
+            StartCoroutine(CoDestroyAfter(go.gameObject, 3f));
+            GameManager.instance.AddScore(10);
+        };
     }
 
     private void CreateEnemy()
@@ -98,9 +128,9 @@ public class EnemySpawner : MonoBehaviour
     IEnumerator CoDestroyAfter(GameObject go, float time)
     {
         yield return new WaitForSeconds(time);
-        //go.SetActive(false);
+        go.SetActive(false);
 
-        Destroy(go);
+        //Destroy(go);
     }
 
 }

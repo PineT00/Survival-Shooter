@@ -135,6 +135,15 @@ public class Enemy : LivingEntity
         }
     }
 
+    public void SetActiveCollider()
+    {
+        var cols = GetComponentsInChildren<Collider>();
+        foreach (Collider col in cols)
+        {
+            col.enabled = true;
+        }
+    }
+
     private void OnTriggerStay(Collider other)
     { 
         if (!dead && Time.time >= lastAttackTime + timeBetAttack)
