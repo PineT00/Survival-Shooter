@@ -1,6 +1,7 @@
 using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.SceneManagement;
@@ -9,6 +10,8 @@ public class GameManager : MonoBehaviour
 {
     public CinemachineVirtualCamera virtualCamera;
 
+    public int stage = 1;
+    public bool stageClear = false;
     public static GameManager instance
     {
         get
@@ -77,6 +80,13 @@ public class GameManager : MonoBehaviour
             score += newScore;
 
             UIManager.instance.UpdateScoreText(score);
+
+            if(score >= 30)
+            {
+                stageClear = true;
+                score = 0;
+                stage++;
+            }
         }
     }
 

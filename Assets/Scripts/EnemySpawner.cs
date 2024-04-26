@@ -8,7 +8,7 @@ public class EnemySpawner : MonoBehaviour
     public Enemy[] enemyPool2;
     public Enemy[] enemyPool3;
 
-    public int currStage = 1;
+    public int currStage;
 
     public Transform[] spawnPoints;
 
@@ -23,6 +23,7 @@ public class EnemySpawner : MonoBehaviour
 
     private void Start()
     {
+        currStage = GameManager.instance.stage;
         SetPool(currStage);
     }
 
@@ -45,6 +46,14 @@ public class EnemySpawner : MonoBehaviour
             spawnTime += Time.deltaTime;
         }
 
+        if(GameManager.instance.stageClear)
+        {
+            currStage = GameManager.instance.stage;
+            GameManager.instance.stageClear = false;
+            SetPool(currStage);
+
+        }
+
         UpdateUI();
     }
 
@@ -56,7 +65,13 @@ public class EnemySpawner : MonoBehaviour
 
     private void SetPool(int stage)
     {
-        switch(stage)
+        foreach(var enemy in enemies)
+        {
+            Destroy(enemy.gameObject);
+        }
+        enemies.Clear();
+
+        switch (stage)
         {
             case 1:
                 for (int i = 0; i < 10; ++i)
@@ -160,8 +175,12 @@ public class EnemySpawner : MonoBehaviour
 
     IEnumerator CoDestroyAfter(Enemy go, float time)
     {
-        yield return new WaitForSeconds(time);
-        go.gameObject.SetActive(false);
+        if(go != null)
+        {
+            yield return new WaitForSeconds(time);
+            go.gameObject.SetActive(false);
+        }
+
 
         //Destroy(go);
     }

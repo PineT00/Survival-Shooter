@@ -1,0 +1,13 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class EnemySlime : Enemy
+{
+
+
+    private void OnTriggerStay(Collider other)
+    {
+
+    }
+}
