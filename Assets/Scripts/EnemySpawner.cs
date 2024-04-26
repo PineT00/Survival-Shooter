@@ -36,11 +36,18 @@ public class EnemySpawner : MonoBehaviour
         {
             go = Instantiate(enemyPrefabs[Random.Range(0, enemyPrefabs.Length)]);
             go.Setup();
-            go.gameObject.SetActive(false); 
+            go.gameObject.SetActive(false);
+
+            go.onDeath += () =>
+            {
+                Debug.Log("onDeath 호출!");
+                enemyCount -= 1;
+                StartCoroutine(CoDestroyAfter(go, 3f));
+                GameManager.instance.AddScore(10);
+            };
+
             enemies.Add(go);
         }
-
-
     }
 
 
@@ -82,22 +89,18 @@ public class EnemySpawner : MonoBehaviour
                 if (!enemies[num].gameObject.activeSelf)
                 {
                     enemies[num].gameObject.SetActive(true);
-                    go.Setup();
-                    go.SetActiveCollider();
-                    enemies[num].transform.position = spawnPoints[Random.Range(0, spawnPoints.Length)].position;
+                    enemies[num].Revive();
+
+                    enemies[num].transform.position = Vector3.zero;
+
+                    //enemies[num].transform.position = spawnPoints[Random.Range(0, spawnPoints.Length)].position;
                     enemyCount += 1;
                     break;
                 }
             }
         }
 
-        go.onDeath += () =>
-        {
-            Debug.Log("onDeath 호출!");
-            enemyCount -= 1;
-            StartCoroutine(CoDestroyAfter(go.gameObject, 3f));
-            GameManager.instance.AddScore(10);
-        };
+
     }
 
     private void CreateEnemy()
@@ -114,7 +117,7 @@ public class EnemySpawner : MonoBehaviour
         {
             enemies.Remove(enemy);
             enemyCount = enemies.Count;
-            StartCoroutine(CoDestroyAfter(go.gameObject, 3f));
+           // StartCoroutine(CoDestroyAfter(go.gameObject, 3f));
             GameManager.instance.AddScore(10);
 
         };
@@ -125,10 +128,10 @@ public class EnemySpawner : MonoBehaviour
 
     }
 
-    IEnumerator CoDestroyAfter(GameObject go, float time)
+    IEnumerator CoDestroyAfter(Enemy go, float time)
     {
         yield return new WaitForSeconds(time);
-        go.SetActive(false);
+        go.gameObject.SetActive(false);
 
         //Destroy(go);
     }

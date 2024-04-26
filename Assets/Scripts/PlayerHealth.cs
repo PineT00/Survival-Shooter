@@ -5,16 +5,16 @@ using UnityEngine.UI;
 
 public class PlayerHealth : LivingEntity
 {
-    public Slider healthSlider; // 체력을 표시할 UI 슬라이더
+    public Slider healthSlider; 
 
-    public AudioClip deathClip; // 사망 소리
-    public AudioClip hitClip; // 피격 소리
+    public AudioClip deathClip; 
+    public AudioClip hitClip; 
 
-    private AudioSource playerAudioPlayer; // 플레이어 소리 재생기
-    private Animator playerAnimator; // 플레이어의 애니메이터
+    private AudioSource playerAudioPlayer;
+    private Animator playerAnimator;
 
-    private PlayerMovement playerMovement; // 플레이어 움직임 컴포넌트
-    private PlayerShooter playerShooter; // 플레이어 슈터 컴포넌트
+    private PlayerMovement playerMovement;
+    private PlayerShooter playerShooter;
 
     private void Awake()
     {
@@ -34,18 +34,18 @@ public class PlayerHealth : LivingEntity
         playerMovement.enabled = true;
         playerShooter.enabled = true;
 
-        //healthSlider.gameObject.SetActive(true);
-        //healthSlider.value = health / startingHealth;
+        healthSlider.gameObject.SetActive(true);
+        healthSlider.value = health / startingHealth;
 
         UIManager.instance.SetActiveGameoverUI(false);
     }
 
     public override void RestoreHealth(float newHealth)
     {
-        // LivingEntity의 RestoreHealth() 실행 (체력 증가)
         base.RestoreHealth(newHealth);
-        //healthSlider.value = health / startingHealth;
+        healthSlider.value = health / startingHealth;
     }
+
     public override void OnDamage(float damage, Vector3 hitPoint, Vector3 hitDirection)
     {
         if (dead)
@@ -53,17 +53,15 @@ public class PlayerHealth : LivingEntity
             return;
         }
         base.OnDamage(damage, hitPoint, hitDirection);
-        //healthSlider.value = health / startingHealth;
+        healthSlider.value = health / startingHealth;
         playerAudioPlayer.PlayOneShot(hitClip);
-
-        Debug.Log("플레이어 아프다");
 
         StartCoroutine(OnDamageUI(0.07f));
     }
     public override void Die()
     {
         base.Die();
-        //healthSlider.gameObject.SetActive(false);
+        healthSlider.gameObject.SetActive(false);
         playerAudioPlayer.PlayOneShot(deathClip);
         playerAnimator.SetTrigger("Die");
 

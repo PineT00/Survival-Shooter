@@ -119,11 +119,19 @@ public class Enemy : LivingEntity
     public override void Die()
     {
         base.Die();
-        pathFinder.isStopped = true;
+        //pathFinder.isStopped = true;
         pathFinder.enabled = false;
 
         enemyAnimator.SetTrigger("Die");
         enemyAudioPlayer.PlayOneShot(deathSound);
+    }
+
+    public void Revive()
+    {
+        pathFinder.enabled = true;
+        SetActiveCollider();
+        Setup();
+        dead = false;
     }
 
     public void StartSinking()
@@ -157,7 +165,6 @@ public class Enemy : LivingEntity
                 var hitNormal = transform.position - other.transform.position;
 
                 targetEntity.OnDamage(damage, hitPoint, hitNormal.normalized);
-                Debug.Log(targetEntity.health);
                 lastAttackTime = Time.time;
             }
 
