@@ -1,7 +1,6 @@
 using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.SceneManagement;
@@ -11,6 +10,8 @@ public class GameManager : MonoBehaviour
     public CinemachineVirtualCamera virtualCamera;
 
     public int stage = 1;
+
+    public bool paused = false;
     public static GameManager instance
     {
         get
@@ -69,7 +70,10 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            UIManager.instance.SetActivePauseMenu();
         }
+
+        UIManager.instance.UpdateTimeText((int)Time.time);
     }
 
     public void AddScore(int newScore)

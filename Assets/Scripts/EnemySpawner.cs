@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    public int currStage;
+    public int stageEnemyMax = 5;
 
     public Transform[] spawnPoints;
 
@@ -15,11 +15,13 @@ public class EnemySpawner : MonoBehaviour
 
     public int enemyCount;
 
+    private float stageTimer = 15f;
+
 
 
     private void Start()
     {
-        for (int i = 0; i < 10; ++i)
+        for (int i = 0; i < 30; ++i)
         {
             var enemyGo = ObjectPoolMgr.instance.Pool.Get();
 
@@ -56,6 +58,17 @@ public class EnemySpawner : MonoBehaviour
             spawnTime += Time.deltaTime;
         }
 
+
+        if(stageEnemyMax < 30)
+        {
+            if (Time.time >= stageTimer)
+            {
+                stageEnemyMax += 5;
+                stageTimer += Time.time;
+            }
+        }
+
+
         //UpdateUI();
     }
 
@@ -77,7 +90,7 @@ public class EnemySpawner : MonoBehaviour
 
     private void SpawnEnemy()
     {
-        if(enemyCount < 10)
+        if(enemyCount < stageEnemyMax)
         {
             for (int i = 0; i < enemies.Count; ++i)
             {
@@ -129,9 +142,6 @@ public class EnemySpawner : MonoBehaviour
             yield return new WaitForSeconds(time);
             go.gameObject.SetActive(false);
         }
-
-
-        //Destroy(go);
     }
 
 }
