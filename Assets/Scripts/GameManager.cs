@@ -11,7 +11,6 @@ public class GameManager : MonoBehaviour
     public CinemachineVirtualCamera virtualCamera;
 
     public int stage = 1;
-    public bool stageClear = false;
     public static GameManager instance
     {
         get
@@ -78,13 +77,6 @@ public class GameManager : MonoBehaviour
         if (!isGameover)
         {
             score += newScore;
-
-            if(score >= 50)
-            {
-                score = 0;
-                stageClear = true;
-                stage++;
-            }
 
             UIManager.instance.UpdateScoreText(score);
 

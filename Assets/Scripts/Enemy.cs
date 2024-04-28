@@ -2,25 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Pool;
 
 public class Enemy : LivingEntity
 {
     public LayerMask whatIsTarget; // 추적 대상 레이어
 
     public LivingEntity targetEntity; // 추적할 대상
-    private NavMeshAgent pathFinder;
+    public NavMeshAgent pathFinder;
 
     public ParticleSystem hitEffect; 
     public AudioClip deathSound; 
     public AudioClip hitSound;
 
-    private Animator enemyAnimator; 
+    public Animator enemyAnimator; 
     private AudioSource enemyAudioPlayer;
     private Renderer enemyRenderer;
 
     public float maxHealth = 100f;
     public float speed = 5f;
     public float damage = 20f; // 공격력
+
+    public IObjectPool<GameObject> Pool { get; set; }
 
 
     private bool hasTarget

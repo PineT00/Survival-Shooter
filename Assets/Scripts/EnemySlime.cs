@@ -6,27 +6,31 @@ public class EnemySlime : Enemy
 {
     public float timeBetAttack = 1.5f; // 공격 간격
     private float lastAttackTime; // 마지막 공격 시점
+    //public bool attack = false;
 
     private void OnTriggerStay(Collider other)
     {
-        if (!dead && Time.time >= lastAttackTime + timeBetAttack)
+        if (!dead && (Time.time >= lastAttackTime + timeBetAttack))
         {
-            var entity = other.GetComponent<PlayerMovement>(); 
+            var entity = other.GetComponent<PlayerMovement>();
             if (entity != null)
             {
-                StartCoroutine(Sticky(entity, 3f));
+                Debug.Log("슬라임 접촉!");
+                enemyAnimator.SetTrigger("Attack");
+                StartCoroutine(Sticky(entity, 1.5f));
                 lastAttackTime = Time.time;
             }
-
         }
-
-
     }
-    private IEnumerator Sticky(PlayerMovement player, float time)
+
+    public IEnumerator Sticky(PlayerMovement target, float time)
     {
         Debug.Log("속도감소!");
-        player.moveSpeed *= 0.5f;
+        pathFinder.isStopped = true;
+        target.moveSpeed *= 0.5f;
         yield return new WaitForSeconds(time);
-        player.moveSpeed *= 2f;
+        target.moveSpeed *= 2f;
+        pathFinder.isStopped = false;
     }
+
 }

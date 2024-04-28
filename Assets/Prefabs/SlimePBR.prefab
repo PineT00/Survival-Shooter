@@ -427,7 +427,8 @@ GameObject:
   - component: {fileID: 4451113627597256391}
   - component: {fileID: 2825824986781270673}
   - component: {fileID: 1662758019189879344}
-  - component: {fileID: 4923226341340316564}
+  - component: {fileID: 2175713477426709606}
+  - component: {fileID: 677457863323597261}
   - component: {fileID: 7286107967426852150}
   m_Layer: 0
   m_Name: SlimePBR
@@ -435,7 +436,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4047972025199878
 Transform:
   m_ObjectHideFlags: 0
@@ -616,7 +617,28 @@ CapsuleCollider:
   m_Height: 1
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &4923226341340316564
+--- !u!65 &2175713477426709606
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1931298151966786}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.5, y: 0.5, z: 0.5}
+  m_Center: {x: 0, y: 0.49, z: 0.96}
+--- !u!114 &677457863323597261
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -625,7 +647,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1931298151966786}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d1c80fb83c54bb479ec0eac6f9eae83, type: 3}
+  m_Script: {fileID: 11500000, guid: 990dd9dbaa859a44a83dbbb4a0e73fa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   startingHealth: 100
@@ -633,12 +655,15 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   targetEntity: {fileID: 0}
+  pathFinder: {fileID: 0}
   hitEffect: {fileID: 95980971856644796}
   deathSound: {fileID: 8300000, guid: 1d3bfb9269f136947bf8ac164cace1ff, type: 3}
   hitSound: {fileID: 8300000, guid: 02e6208ec76314158a9f548f51fe9f11, type: 3}
+  enemyAnimator: {fileID: 0}
   maxHealth: 100
-  speed: 6
+  speed: 5
   damage: 20
+  timeBetAttack: 2
 --- !u!54 &7286107967426852150
 Rigidbody:
   m_ObjectHideFlags: 0

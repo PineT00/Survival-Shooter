@@ -4,10 +4,6 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    public Enemy[] enemyPool1;
-    public Enemy[] enemyPool2;
-    public Enemy[] enemyPool3;
-
     public int currStage;
 
     public Transform[] spawnPoints;
@@ -23,8 +19,22 @@ public class EnemySpawner : MonoBehaviour
 
     private void Start()
     {
-        currStage = GameManager.instance.stage;
-        SetPool(currStage);
+        for (int i = 0; i < 10; ++i)
+        {
+            var enemyGo = ObjectPoolMgr.instance.Pool.Get();
+
+            var enemy = enemyGo.GetComponent<Enemy>();
+            enemy.Setup();
+            enemy.onDeath += () =>
+            {
+                enemyCount--;
+                StartCoroutine(CoDestroyAfter(enemy, 3f));
+                GameManager.instance.AddScore(10);
+            };
+            enemy.gameObject.SetActive(false);
+            enemies.Add(enemy);
+        }
+
     }
 
 
@@ -46,14 +56,6 @@ public class EnemySpawner : MonoBehaviour
             spawnTime += Time.deltaTime;
         }
 
-        if(GameManager.instance.stageClear)
-        {
-            currStage = GameManager.instance.stage;
-            GameManager.instance.stageClear = false;
-            SetPool(currStage);
-
-        }
-
         //UpdateUI();
     }
 
@@ -71,58 +73,6 @@ public class EnemySpawner : MonoBehaviour
         }
         enemies.Clear();
         enemyCount = 0;
-
-        switch (stage)
-        {
-            case 1:
-                for (int i = 0; i < 10; ++i)
-                {
-                    var go = Instantiate(enemyPool1[Random.Range(0, enemyPool1.Length)]);
-                    var enemy = go.GetComponent<Enemy>();
-                    enemy.Setup();
-                    enemy.onDeath += () =>
-                    {
-                        enemyCount--;
-                        StartCoroutine(CoDestroyAfter(enemy, 3f));
-                        GameManager.instance.AddScore(10);
-                    };
-                    enemy.gameObject.SetActive(false);
-                    enemies.Add(enemy);
-                }
-                break;
-            case 2:
-                for (int i = 0; i < 10; ++i)
-                {
-                    var go = Instantiate(enemyPool2[Random.Range(0, enemyPool2.Length)]);
-                    var enemy = go.GetComponent<Enemy>();
-                    enemy.Setup();
-                    enemy.onDeath += () =>
-                    {
-                        enemyCount--;
-                        StartCoroutine(CoDestroyAfter(enemy, 3f));
-                        GameManager.instance.AddScore(20);
-                    };
-                    enemy.gameObject.SetActive(false);
-                    enemies.Add(enemy);
-                }
-                break;
-            case 3:
-                for (int i = 0; i < 10; ++i)
-                {
-                    var go = Instantiate(enemyPool3[Random.Range(0, enemyPool3.Length)]);
-                    var enemy = go.GetComponent<Enemy>();
-                    enemy.Setup();
-                    enemy.onDeath += () =>
-                    {
-                        enemyCount--;
-                        StartCoroutine(CoDestroyAfter(enemy, 3f));
-                        GameManager.instance.AddScore(30);
-                    };
-                    enemy.gameObject.SetActive(false);
-                    enemies.Add(enemy);
-                }
-                break;
-        }
     }
 
     private void SpawnEnemy()
@@ -138,7 +88,6 @@ public class EnemySpawner : MonoBehaviour
                     enemies[num].transform.position = spawnPoints[Random.Range(0, spawnPoints.Length)].position;
                     //enemies[num].transform.position = Vector3.zero;
                     enemies[num].Revive();
-
                     enemyCount += 1;
                     break;
                 }
@@ -150,26 +99,26 @@ public class EnemySpawner : MonoBehaviour
 
     private void CreateEnemy()
     {
-        var go = Instantiate(enemyPool1[Random.Range(0, enemyPool1.Length)],
-            spawnPoints[Random.Range(0, spawnPoints.Length)].position, Quaternion.identity);
+        //var go = Instantiate(enemyPool1[Random.Range(0, enemyPool1.Length)],
+        //    spawnPoints[Random.Range(0, spawnPoints.Length)].position, Quaternion.identity);
 
-        var enemy = go.GetComponent<Enemy>();
+        //var enemy = go.GetComponent<Enemy>();
 
-        enemy.Setup();
+        //enemy.Setup();
 
 
-        enemy.onDeath += () =>
-        {
-            enemies.Remove(enemy);
-            enemyCount = enemies.Count;
-           // StartCoroutine(CoDestroyAfter(go.gameObject, 3f));
-            GameManager.instance.AddScore(10);
+        //enemy.onDeath += () =>
+        //{
+        //    enemies.Remove(enemy);
+        //    enemyCount = enemies.Count;
+        //   // StartCoroutine(CoDestroyAfter(go.gameObject, 3f));
+        //    GameManager.instance.AddScore(10);
 
-        };
+        //};
 
-        enemies.Add(enemy);
-        enemyCount = enemies.Count;
-        var live = enemy.GetComponent<LivingEntity>();
+        //enemies.Add(enemy);
+        //enemyCount = enemies.Count;
+        //var live = enemy.GetComponent<LivingEntity>();
 
     }
 
