@@ -111,7 +111,6 @@ public class Enemy : LivingEntity
 
         // LivingEntity의 OnDamage()를 실행하여 데미지 적용
         base.OnDamage(damage, hitPoint, hitNormal);
-        Debug.Log("좀비아파");
     }
     public override void Die()
     {

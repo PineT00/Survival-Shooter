@@ -148,9 +148,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 100004, guid: b77f122f451a2394898a24191c26107c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5788857956890604623}
-    - targetCorrespondingSourceObject: {fileID: 100004, guid: b77f122f451a2394898a24191c26107c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 4363571391277995123}
   m_SourcePrefab: {fileID: 100100000, guid: b77f122f451a2394898a24191c26107c, type: 3}
 --- !u!1 &7265521540499805511 stripped
 GameObject:
@@ -336,9 +333,11 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   targetEntity: {fileID: 0}
+  pathFinder: {fileID: 0}
   hitEffect: {fileID: 4264259703304948138}
   deathSound: {fileID: 8300000, guid: 8c615fd0429f34edf85539d70279360d, type: 3}
   hitSound: {fileID: 8300000, guid: fce027b40770a44298a6f5a4233bfb04, type: 3}
+  enemyAnimator: {fileID: 0}
   maxHealth: 200
   speed: 5
   damage: 30
@@ -360,39 +359,14 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   targetEntity: {fileID: 0}
+  pathFinder: {fileID: 0}
   hitEffect: {fileID: 4264259703304948138}
   deathSound: {fileID: 8300000, guid: fce027b40770a44298a6f5a4233bfb04, type: 3}
   hitSound: {fileID: 8300000, guid: fce027b40770a44298a6f5a4233bfb04, type: 3}
+  enemyAnimator: {fileID: 0}
   maxHealth: 200
   speed: 4
   damage: 40
---- !u!54 &4363571391277995123
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7265521540499805511}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 32
-  m_CollisionDetection: 0
 --- !u!4 &7265521540500228455 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400004, guid: b77f122f451a2394898a24191c26107c, type: 3}
